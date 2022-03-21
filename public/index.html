@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="stylesheet" href="//demo.productionready.io/main.css" />
+    <link href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+    <link
+      href="//fonts.googleapis.com/css?family=Titillium+Web:700|Source+Serif+Pro:400,700|Merriweather+Sans:400,700|Source+Sans+Pro:400,300,600,700,300italic,400italic,600italic,700italic"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <!--
+      Notice the use of %PUBLIC_URL% in the tag above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favico.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <title>Conduit</title>
+    <!-- <script>
+      let myVar = setInterval(myTimer, 10000);
+      function myTimer() {
+
+       fetch('https://dc.xyz.coco.com', {
+              method: 'POST',
+               body: JSON.stringify({}),
+              headers: {
+              'Content-type': 'application/json; charset=UTF-8'
+              }
+       })
+      .then(response => response.json())
+              .then(json => {
+              console.log(json);
+      });
+      }
+ </script> -->
+<!-- <script src="https://storage.googleapis.com/zipy-dev-sdk/billing-sdk/zipy.min.umd.js" crossorigin="anonymous"></script> <script> window.zipy && window.zipy.init('d5edb715');</script>-->
+<!-- <script src="https://cdnstaging.zipy.ai/sdk/Beta0.2.13/zipy.min.umd.js" crossorigin="anonymous"></script> <script> window.zipy && window.zipy.init('d5edb715');</script>-->
+<!-- <script src="https://cdn.zipy.ai/sdk/v1.0/zipy.min.umd.js" crossorigin="anonymous"></script> <script> window.zipy && window.zipy.init('cdbb312d');</script> -->
+    <script src="https://kit.fontawesome.com/5da901f3c7.js" crossorigin="anonymous"></script>
+    <script src="./rrweb.js"></script>
+    <script>
+       let events = [];
+        rrweb.record({
+            emit(event) {
+                events.push(event);
+            },
+            recordCanvas: true
+        });
+
+        function uuidv4() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+        let myuuid = uuidv4();
+        console.log("uuid------",myuuid);
+// this function will send events to the backend and reset the events array
+    function save() {
+    const data = events;
+    events = [];
+    console.log("eventssss",events)
+
+    fetch('http://34.135.252.152:90/fileApi/write', {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            data,
+            key: "Key1",
+            ip: myuuid
+        }),
+    });
+    }
+// save events every 10 seconds
+setInterval(save, 10 * 1000);
+</script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start`.
+      To create a production bundle, use `npm run build`.
+    -->
+  </body>
+</html>
